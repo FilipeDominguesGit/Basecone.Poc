@@ -1,4 +1,5 @@
-﻿using Basecone.Poc.Domain.Exceptions;
+﻿using Basecone.Poc.Domain.Events;
+using Basecone.Poc.Domain.Exceptions;
 using Basecone.Poc.Seedwork;
 using System;
 using System.Collections.Generic;
@@ -30,23 +31,31 @@ namespace Basecone.Poc.Domain.OfficeAggregate
 
         public IReadOnlyList<Company> Companies => _companies.AsReadOnly();
 
-        private List<Company> _companies;
+        private List<Company> _companies = new List<Company>();
+
+        public Office()
+        {
+        }
 
         public Office(string officeCode)
         {
+            UniqueId = Guid.NewGuid();
             OfficeCode = officeCode;
-            _companies = new List<Company>();
+
+            AddDomainEvent(new OfficeCreated(this));
 
         }
 
+
         public void AddCompany(Company company)
         {
-            if(_companies.Any(c=>c.CompanyCode == company.CompanyCode))
+            if (_companies.Any(c => c.CompanyCode == company.CompanyCode))
             {
                 throw new DomainException("Office already has company with same code");
-            }       
+            }
 
             _companies.Add(company);
+            AddDomainEvent(new CompanyAdded(this, company));
         }
 
     }

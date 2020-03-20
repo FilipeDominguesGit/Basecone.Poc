@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Basecone.Poc.Application.Commands;
+using Basecone.Poc.Domain.OfficeAggregate;
+using Basecone.Poc.Infrastructure;
+using Basecone.Poc.Seedwork;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Basecone.Poc.Api
 {
@@ -26,6 +26,23 @@ namespace Basecone.Poc.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddScoped<IOfficeRepository, OfficeRepository>();
+
+            services.AddMediatR(cfg => {
+
+            }, typeof(CreateOfficeCommandHandler).Assembly);
+          //  services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMeterBehavior<,>));
+
+            services.AddDbContext<BaseconePocContext>(c => c.UseInMemoryDatabase("ExampleDatabase"));
+
+            services.AddScoped<IUnitOfWork>(c => c.GetService<BaseconePocContext>());
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basecone API", Version = "v1" });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +62,13 @@ namespace Basecone.Poc.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basecone API V1");
             });
         }
     }

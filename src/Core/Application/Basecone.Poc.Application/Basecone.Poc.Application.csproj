@@ -4,4 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Seedwork\Basecone.Poc.Seedwork\Basecone.Poc.Seedwork.csproj" />
+    <ProjectReference Include="..\..\Domain\Basecone.Poc.Domain\Basecone.Poc.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

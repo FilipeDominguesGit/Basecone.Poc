@@ -1,6 +1,8 @@
-﻿namespace Basecone.Poc.Seedwork
+﻿using MediatR;
+
+namespace Basecone.Poc.Seedwork
 {
-    public interface IDomainEvent
+    public interface IDomainEvent : INotification
     {
     }
 }
