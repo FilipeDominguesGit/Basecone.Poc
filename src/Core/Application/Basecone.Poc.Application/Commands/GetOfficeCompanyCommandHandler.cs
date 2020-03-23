@@ -1,4 +1,5 @@
-﻿using Basecone.Poc.Application.Models;
+﻿using AutoMapper;
+using Basecone.Poc.Application.Models;
 using Basecone.Poc.Domain.OfficeAggregate;
 using MediatR;
 using System.Threading;
@@ -9,23 +10,21 @@ namespace Basecone.Poc.Application.Commands
     public class GetOfficeCompanyCommandHandler : IRequestHandler<GetOfficeCompanyCommand, CompanyDto>
     {
         private readonly IOfficeRepository _officeRepository;
+        private readonly IMapper _mapper;
 
-        public GetOfficeCompanyCommandHandler(IOfficeRepository officeRepository)
+        public GetOfficeCompanyCommandHandler(IOfficeRepository officeRepository, IMapper mapper)
         {
             _officeRepository = officeRepository;
+            _mapper = mapper;
         }
 
         public async Task<CompanyDto> Handle(GetOfficeCompanyCommand request, CancellationToken cancellationToken)
         {
-            var company = _officeRepository.GetOfficeCompanyById(request.OfficeId, request.CompayId);
+            var company = await _officeRepository.GetOfficeCompanyByIdAsync(request.OfficeId, request.CompayId);
 
-            var dto = new CompanyDto
-            {
-                CompanyCode = company.CompanyCode,
-                UniqueId = company.UniqueId
-            };
+            var dto = _mapper.Map<CompanyDto>(company);
 
-            return await Task.FromResult(dto);
+            return dto;
         }
     }
 }

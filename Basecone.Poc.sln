@@ -38,7 +38,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basecone.Poc.Worker", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basecone.Poc.Seedwork", "src\Seedwork\Basecone.Poc.Seedwork\Basecone.Poc.Seedwork.csproj", "{48E86898-18F0-4EED-A605-DC25E7A270B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basecone.Poc.Api.Contracts", "src\Interface\Api\Basecone.Poc.Api.Contracts\Basecone.Poc.Api.Contracts.csproj", "{25771AD4-E6A2-495C-964D-CD90E27129C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basecone.Poc.Api.Contracts", "src\Interface\Api\Basecone.Poc.Api.Contracts\Basecone.Poc.Api.Contracts.csproj", "{25771AD4-E6A2-495C-964D-CD90E27129C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{86D3DF0B-D6B6-422D-BFE1-DD9EEC0E2F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basecone.Poc.Client", "src\Interface\Client\Basecone.Poc.Client\Basecone.Poc.Client.csproj", "{442240BA-7DEA-425A-80AB-230183755669}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +78,10 @@ Global
 		{25771AD4-E6A2-495C-964D-CD90E27129C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25771AD4-E6A2-495C-964D-CD90E27129C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25771AD4-E6A2-495C-964D-CD90E27129C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{442240BA-7DEA-425A-80AB-230183755669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442240BA-7DEA-425A-80AB-230183755669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442240BA-7DEA-425A-80AB-230183755669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442240BA-7DEA-425A-80AB-230183755669}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,8 @@ Global
 		{DF970536-DCB5-4179-A1A2-B4101D43A1EF} = {EA0AFB63-7EF5-444F-ADA3-36405D98D121}
 		{48E86898-18F0-4EED-A605-DC25E7A270B2} = {5C020AD6-9672-4F30-937B-8B314A34A2BB}
 		{25771AD4-E6A2-495C-964D-CD90E27129C2} = {61AA4410-B0D8-4777-ACA2-5441BB6B8623}
+		{86D3DF0B-D6B6-422D-BFE1-DD9EEC0E2F2B} = {CCED34A4-0E1D-4B0E-A491-CDA1168C39C5}
+		{442240BA-7DEA-425A-80AB-230183755669} = {86D3DF0B-D6B6-422D-BFE1-DD9EEC0E2F2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {17299DDA-B20E-43B0-AFEB-2231E927F73A}

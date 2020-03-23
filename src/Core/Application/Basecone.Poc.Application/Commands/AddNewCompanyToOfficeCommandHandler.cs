@@ -1,4 +1,5 @@
-﻿using Basecone.Poc.Application.Models;
+﻿using AutoMapper;
+using Basecone.Poc.Application.Models;
 using Basecone.Poc.Domain.OfficeAggregate;
 using Basecone.Poc.Seedwork;
 using MediatR;
@@ -15,27 +16,25 @@ namespace Basecone.Poc.Application.Commands
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public AddNewCompanyToOfficeCommandHandler(IOfficeRepository officeRepository, IUnitOfWork unitOfWork)
+        public AddNewCompanyToOfficeCommandHandler(IOfficeRepository officeRepository, IUnitOfWork unitOfWork,IMapper mapper)
         {
             _officeRepository = officeRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task<CompanyDto> Handle(AddNewCompanyToOfficeCommand request, CancellationToken cancellationToken)
         {
-            var office = _officeRepository.Get(request.OfficeUniqueId);
+            var office = await _officeRepository.GetAsync(request.OfficeUniqueId);
 
             var company = new Company(request.CompanyCode);
 
             office.AddCompany(company);
 
             await _unitOfWork.Commit();
-
-            var dto = office.Companies.Select(c => new CompanyDto
-            {
-                CompanyCode = c.CompanyCode,
-                UniqueId = c.UniqueId
-            }).FirstOrDefault();
+           
+            var dto = _mapper.Map<CompanyDto>(office.Companies.FirstOrDefault());
 
             return dto;
         }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Basecone.Poc.Infrastructure
 {
@@ -16,37 +16,50 @@ namespace Basecone.Poc.Infrastructure
             _context = context;
         }
 
-        public void Add(Office office)
+        public async Task AddAsync(Office office)
         {
-            _context.Set<Office>().Add(office);
+           await _context.Set<Office>()
+                .AddAsync(office)
+                .ConfigureAwait(false);
         }
 
-        public Office Get(Guid uniqueId)
+        public async Task<Office> GetAsync(Guid uniqueId)
         {
-            return _context.Set<Office>().Include(o => o.Companies).Where(o => o.UniqueId == uniqueId).FirstOrDefault();
+            return await _context.Set<Office>()
+                .Include(o => o.Companies)
+                .Where(o => o.UniqueId == uniqueId)
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
         }
 
-        public List<Office> GetAll()
+        public async Task<List<Office>> GetAllAsync()
         {
-            return _context.Set<Office>().Include(o => o.Companies).ToList();
+            return await _context.Set<Office>()
+                .Include(o => o.Companies)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
-        public Company GetOfficeCompanyById(Guid officeUniqueId, Guid companyUniqueId)
+        public async Task<Company> GetOfficeCompanyByIdAsync(Guid officeUniqueId, Guid companyUniqueId)
         {
-            return _context.Set<Office>()
+            var office = await _context.Set<Office>()
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == officeUniqueId)
-                .FirstOrDefault()?
-                .Companies.Where(c=>c.UniqueId==companyUniqueId).FirstOrDefault();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+
+            return office.Companies.Where(c => c.UniqueId == companyUniqueId).FirstOrDefault();
         }
 
-        public List<Company> GetAllOfficeCompanies(Guid officeUniqueId)
+        public async Task<List<Company>> GetAllOfficeCompaniesAsync(Guid officeUniqueId)
         {
-            return _context.Set<Office>()
+            var office = await _context.Set<Office>()
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == officeUniqueId)
-                .FirstOrDefault()?
-                .Companies.ToList();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+
+            return office?.Companies.ToList();
         }
     }
 }

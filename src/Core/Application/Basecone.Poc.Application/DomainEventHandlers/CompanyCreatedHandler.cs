@@ -1,8 +1,6 @@
 ﻿using Basecone.Poc.Domain.Events;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,9 +8,16 @@ namespace Basecone.Poc.Application.DomainEventHandlers
 {
     public class CompanyCreatedHandler : INotificationHandler<CompanyCreated>
     {
+        private readonly ILogger<CompanyCreatedHandler> _logger;
+
+        public CompanyCreatedHandler(ILogger<CompanyCreatedHandler> logger)
+        {
+            _logger = logger;
+        }
+
         public async Task Handle(CompanyCreated notification, CancellationToken cancellationToken)
         {
-            Console.WriteLine($"Domain Event [CompanyCreated]: Office: {notification.Company.CompanyCode}.");
+            _logger.LogWarning($"Domain Event [CompanyCreated]: Office: {notification.Company.CompanyCode}.");
             await Task.Delay(1);
         }
     }

@@ -1,4 +1,5 @@
-﻿using Basecone.Poc.Application.Models;
+﻿using AutoMapper;
+using Basecone.Poc.Application.Models;
 using Basecone.Poc.Domain.OfficeAggregate;
 using Basecone.Poc.Seedwork;
 using MediatR;
@@ -14,25 +15,21 @@ namespace Basecone.Poc.Application.Commands
     public class GetOfficeByUniqueIdCommandHandler : IRequestHandler<GetOfficeByUniqueIdCommand, OfficeDto>
     {
         private readonly IOfficeRepository _officeRepository;
+        private readonly IMapper _mapper;
 
-        public GetOfficeByUniqueIdCommandHandler(IOfficeRepository officeRepository)
+        public GetOfficeByUniqueIdCommandHandler(IOfficeRepository officeRepository,IMapper mapper)
         {
             _officeRepository = officeRepository;
+            _mapper = mapper;
         }
 
         public async Task<OfficeDto> Handle(GetOfficeByUniqueIdCommand request, CancellationToken cancellationToken)
         {
-            var office = _officeRepository.Get(request.OfficeUniqueId);
-            var dto = new OfficeDto
-            {
-                OfficeCode = office.OfficeCode,
-                UniqueId = office.UniqueId,
-                Companies = office.Companies.Select(c=>new CompanyDto {
-                    CompanyCode = c.CompanyCode,
-                    UniqueId =c.UniqueId}).ToList()
-            };
+            var office = await _officeRepository.GetAsync(request.OfficeUniqueId);
 
-            return await Task.FromResult(dto);
+            var dto = _mapper.Map<OfficeDto>(office);
+
+            return dto;
         }
     }
 }

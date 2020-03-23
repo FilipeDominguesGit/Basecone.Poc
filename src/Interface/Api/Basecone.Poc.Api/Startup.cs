@@ -1,4 +1,8 @@
+using AutoMapper;
+using Basecone.Poc.Api.Mappers;
+using Basecone.Poc.Application.Behaviors;
 using Basecone.Poc.Application.Commands;
+using Basecone.Poc.Application.Mappers;
 using Basecone.Poc.Domain.OfficeAggregate;
 using Basecone.Poc.Infrastructure;
 using Basecone.Poc.Seedwork;
@@ -29,10 +33,9 @@ namespace Basecone.Poc.Api
 
             services.AddScoped<IOfficeRepository, OfficeRepository>();
 
-            services.AddMediatR(cfg => {
-
-            }, typeof(CreateOfficeCommandHandler).Assembly);
-          //  services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMeterBehavior<,>));
+            services.AddMediatR(cfg => {}, typeof(CreateOfficeCommandHandler).Assembly);
+            
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMeterBehavior<,>));
 
             services.AddDbContext<BaseconePocContext>(c => c.UseInMemoryDatabase("ExampleDatabase"));
 
@@ -42,6 +45,8 @@ namespace Basecone.Poc.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basecone API", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(ApiProfile),typeof(ApplicationProfile));
 
         }
 

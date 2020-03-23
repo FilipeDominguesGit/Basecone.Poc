@@ -1,4 +1,5 @@
-﻿using Basecone.Poc.Application.Models;
+﻿using AutoMapper;
+using Basecone.Poc.Application.Models;
 using Basecone.Poc.Domain.OfficeAggregate;
 using MediatR;
 using System;
@@ -13,30 +14,21 @@ namespace Basecone.Poc.Application.Commands
     public class GetAllOfficesCommandHandler : IRequestHandler<GetAllOfficesCommand, List<OfficeDto>>
     {
         private readonly IOfficeRepository _officeRepository;
+        private readonly IMapper _mapper;
 
-        public GetAllOfficesCommandHandler(IOfficeRepository officeRepository)
+        public GetAllOfficesCommandHandler(IOfficeRepository officeRepository, IMapper mapper)
         {
             _officeRepository = officeRepository;
+            _mapper = mapper;
         }
 
         public async Task<List<OfficeDto>> Handle(GetAllOfficesCommand request, CancellationToken cancellationToken)
         {
-            var offices = _officeRepository.GetAll();
+            var offices = await _officeRepository.GetAllAsync();
+     
+            var officeDtos = _mapper.Map<List<OfficeDto>>(offices);
 
-            var officeDtos = offices
-                .Select(office => new OfficeDto
-                    {
-                        OfficeCode = office.OfficeCode,
-                        UniqueId = office.UniqueId,
-                        Companies = office.Companies.Select(c => new CompanyDto
-                        {
-                            CompanyCode = c.CompanyCode,
-                            UniqueId = c.UniqueId
-                        }).ToList()
-                    })
-                .ToList();
-
-            return await Task.FromResult(officeDtos);
+            return officeDtos;
         }
     }
 }
