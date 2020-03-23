@@ -4,11 +4,11 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace Basecone.Poc.Application.Commands
+namespace Basecone.Poc.Application.Queries
 {
-    public class GetAllOfficeCompaniesCommand :IRequest<List<CompanyDto>>
+    public class GetAllOfficeCompaniesQuery : IRequest<List<CompanyDto>>
     {
-        public GetAllOfficeCompaniesCommand(Guid officeId)
+        public GetAllOfficeCompaniesQuery(Guid officeId)
         {
             OfficeId = officeId;
         }

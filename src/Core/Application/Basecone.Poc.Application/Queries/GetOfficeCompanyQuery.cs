@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Basecone.Poc.Application.Commands
+namespace Basecone.Poc.Application.Queries
 {
-    public class GetOfficeCompanyCommand : IRequest<CompanyDto>
+    public class GetOfficeCompanyQuery : IRequest<CompanyDto>
     {
-        public GetOfficeCompanyCommand(Guid officeId, Guid compayId)
+        public GetOfficeCompanyQuery(Guid officeId, Guid compayId)
         {
             OfficeId = officeId;
             CompayId = compayId;

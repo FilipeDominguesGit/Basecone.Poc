@@ -1,4 +1,5 @@
-﻿using Basecone.Poc.Infrastructure.Mapper;
+﻿using Basecone.Poc.Domain.OfficeAggregate;
+using Basecone.Poc.Infrastructure.Mapper;
 using Basecone.Poc.Seedwork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ namespace Basecone.Poc.Infrastructure
     public class BaseconePocContext : DbContext, IUnitOfWork
     {
         private readonly IMediator _domainEventsPublisher;
+
+        public DbSet<Office> Offices { get; }
 
         public BaseconePocContext(DbContextOptions options, IMediator domainEventsPublisher) : base(options)
         {

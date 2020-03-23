@@ -4,9 +4,9 @@ using System;
 
 namespace Basecone.Poc.Application.Commands
 {
-    public class GetOfficeByUniqueIdCommand : IRequest<OfficeDto>
+    public class GetOfficeByUniqueIdQuery : IRequest<OfficeDto>
     {
-        public GetOfficeByUniqueIdCommand(Guid officeUniqueId)
+        public GetOfficeByUniqueIdQuery(Guid officeUniqueId)
         {
             OfficeUniqueId = officeUniqueId;
         }

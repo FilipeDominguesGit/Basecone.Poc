@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace Basecone.Poc.Application.Commands
 {
-    public class GetOfficeCompanyCommandHandler : IRequestHandler<GetOfficeCompanyCommand, CompanyDto>
+    public class GetOfficeByUniqueIdQueryHandler : IRequestHandler<GetOfficeByUniqueIdQuery, OfficeDto>
     {
         private readonly IOfficeRepository _officeRepository;
         private readonly IMapper _mapper;
 
-        public GetOfficeCompanyCommandHandler(IOfficeRepository officeRepository, IMapper mapper)
+        public GetOfficeByUniqueIdQueryHandler(IOfficeRepository officeRepository,IMapper mapper)
         {
             _officeRepository = officeRepository;
             _mapper = mapper;
         }
 
-        public async Task<CompanyDto> Handle(GetOfficeCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<OfficeDto> Handle(GetOfficeByUniqueIdQuery request, CancellationToken cancellationToken)
         {
-            var company = await _officeRepository.GetOfficeCompanyByIdAsync(request.OfficeId, request.CompayId);
+            var office = await _officeRepository.GetAsync(request.OfficeUniqueId);
 
-            var dto = _mapper.Map<CompanyDto>(company);
+            var dto = _mapper.Map<OfficeDto>(office);
 
             return dto;
         }

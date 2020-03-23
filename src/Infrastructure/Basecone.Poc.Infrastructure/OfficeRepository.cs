@@ -18,14 +18,14 @@ namespace Basecone.Poc.Infrastructure
 
         public async Task AddAsync(Office office)
         {
-           await _context.Set<Office>()
+           await _context.Offices
                 .AddAsync(office)
                 .ConfigureAwait(false);
         }
 
         public async Task<Office> GetAsync(Guid uniqueId)
         {
-            return await _context.Set<Office>()
+            return await _context.Offices
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == uniqueId)
                 .FirstOrDefaultAsync()
@@ -34,7 +34,7 @@ namespace Basecone.Poc.Infrastructure
 
         public async Task<List<Office>> GetAllAsync()
         {
-            return await _context.Set<Office>()
+            return await _context.Offices
                 .Include(o => o.Companies)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -42,7 +42,7 @@ namespace Basecone.Poc.Infrastructure
 
         public async Task<Company> GetOfficeCompanyByIdAsync(Guid officeUniqueId, Guid companyUniqueId)
         {
-            var office = await _context.Set<Office>()
+            var office = await _context.Offices
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == officeUniqueId)
                 .FirstOrDefaultAsync()
@@ -53,7 +53,7 @@ namespace Basecone.Poc.Infrastructure
 
         public async Task<List<Company>> GetAllOfficeCompaniesAsync(Guid officeUniqueId)
         {
-            var office = await _context.Set<Office>()
+            var office = await _context.Offices
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == officeUniqueId)
                 .FirstOrDefaultAsync()

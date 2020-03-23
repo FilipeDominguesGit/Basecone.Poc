@@ -3,6 +3,7 @@ using Basecone.Poc.Api.Contracts.Requests;
 using Basecone.Poc.Api.Contracts.Responses;
 using Basecone.Poc.Application.Commands;
 using Basecone.Poc.Application.Models;
+using Basecone.Poc.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,7 +42,7 @@ namespace Basecone.Poc.Api.Controllers
         public async Task<ActionResult<List<OfficeDto>>> GetAll()
         {
 
-            var command = new GetAllOfficesCommand();
+            var command = new GetAllOfficesQuery();
 
             var response = await _mediator.Send(command);
 
@@ -54,7 +55,7 @@ namespace Basecone.Poc.Api.Controllers
         public async Task<ActionResult<Office>> Get(Guid officeId)
         {
 
-            var command = new GetOfficeByUniqueIdCommand(officeId);
+            var command = new GetOfficeByUniqueIdQuery(officeId);
 
             var response = await _mediator.Send(command);
 
@@ -80,7 +81,7 @@ namespace Basecone.Poc.Api.Controllers
         public async Task<ActionResult<List<Company>>> GetCompanies(Guid officeId)
         {
 
-            var command = new GetAllOfficeCompaniesCommand(officeId);
+            var command = new GetAllOfficeCompaniesQuery(officeId);
 
             var response = await _mediator.Send(command);
 
@@ -92,7 +93,7 @@ namespace Basecone.Poc.Api.Controllers
         [HttpGet("{officeId}/company/{companyId}")]
         public async Task<ActionResult<CompanyDto>> GetOfficeCompany(Guid officeId, Guid companyId)
         {
-            var command = new GetOfficeCompanyCommand(officeId, companyId);
+            var command = new GetOfficeCompanyQuery(officeId, companyId);
 
             var response = await _mediator.Send(command);
 
