@@ -3,13 +3,14 @@
 ## Features
 
 - DDD with clean architecture
-- Repository and Unit of work patter using entity framework [ EFcore with in memory DB ]
-- CQS using mediator pattern [ Mediatr ]
+- Repository and Unit of work patter using entity framework [ EfCore with in memory DB ]
+- CQS using mediator pattern [ EfCore + Mediatr ]
 	- Queries: Return a result and do not change the observable state of the system (are free of side effects).
-	- Commands: Change the state of a system but do not return a value. [ there some exeptions to the return value rule. ]
+	- Commands: Change the state of a system but do not return a value. [There some exeptions to the return value rule.]
 - Domain event support [ Mediatr ]
 - Automatic mapping between layers [ Automapper]
-- Swagger support
+- Swagger support [ Swashbuckle ]
+- Logging [ Serilog ]
 
 ## TODO
 - Implement example worker
@@ -21,3 +22,11 @@
 - Add Healthcheks
 - Add Jwt Auth
 - Add Exception handler
+
+## Aditional information
+
+https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/
+https://airbrake.io/blog/software-design/domain-driven-design
+https://martinfowler.com/bliki/CommandQuerySeparation.html
+https://github.com/dotnet-architecture/eShopOnContainers/tree/dev/src/Services/Ordering
