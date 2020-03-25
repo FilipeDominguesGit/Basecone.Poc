@@ -27,7 +27,11 @@
 ## Aditional information
 
 https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
 https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/
+
 https://airbrake.io/blog/software-design/domain-driven-design
+
 https://martinfowler.com/bliki/CommandQuerySeparation.html
+
 https://github.com/dotnet-architecture/eShopOnContainers/tree/dev/src/Services/Ordering
