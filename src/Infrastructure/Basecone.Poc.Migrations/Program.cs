@@ -1,9 +1,10 @@
 ﻿using Basecone.Poc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Serilog;
-using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
 
 namespace Basecone.Poc.Migrations
 {
@@ -11,6 +12,15 @@ namespace Basecone.Poc.Migrations
     {
         static void Main(string[] args)
         {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
+            
+            var configuration = configBuilder.Build();
+
             var serilogLogger = new LoggerConfiguration()
             .WriteTo.Console()
             .CreateLogger();
@@ -19,16 +29,11 @@ namespace Basecone.Poc.Migrations
                 .AddLogging(f =>
                 {
                     f.AddSerilog(serilogLogger);
-
                 })
-
-               //.AddLogging(c => c.AddConsole())
                .AddDbContext<BaseconePocContext>(
                    (c, o) =>
                    {
-                       var loggerFactory = c.GetService<ILoggerFactory>();
-                       o.UseMySql("server=localhost;port=3306;database=BaseconePoc;uid=root;password=rootpwd;", b => b.MigrationsAssembly("Basecone.Poc.Migrations"))
-                       .UseLoggerFactory(loggerFactory);
+                       o.UseMySql(configuration.GetConnectionString("MySql"), b => b.MigrationsAssembly("Basecone.Poc.Migrations"));
                    })
                .BuildServiceProvider();
 

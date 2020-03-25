@@ -33,8 +33,6 @@ namespace Basecone.Poc.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             services.AddControllers();
 
             services.AddScoped<IOfficeRepository, OfficeRepository>();
@@ -43,15 +41,17 @@ namespace Basecone.Poc.Api
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMeterBehavior<,>));
 
-
             services.AddDbContext<BaseconePocContext>((context, options) =>
             {
-                var loggerFactory = context.GetService<ILoggerFactory>();
                 if (Configuration.GetValue<bool>("UseInMemory"))
+                {
                     options.UseInMemoryDatabase("ExampleDatabase");
+                }
                 else
-                    options.UseMySql("server=localhost;port=3306;database=BaseconePoc;uid=root;password=rootpwd;");
-                options.UseLoggerFactory(loggerFactory);
+                {
+                    var connString = Configuration.GetConnectionString("MySql");
+                    options.UseMySql(connString);
+                }
             });
 
             services.AddScoped<IUnitOfWork>(c => c.GetService<BaseconePocContext>());

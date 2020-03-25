@@ -14,7 +14,7 @@ namespace Basecone.Poc.Migrations
                 .UseMySql("server=localhost;port=3306;database=BaseconePoc;uid=root;password=rootpwd;",
                 b => b.MigrationsAssembly("Basecone.Poc.Migrations"));
 
-            return new BaseconePocContext(builder.Options, null);
+            return new BaseconePocContext(builder.Options);
         }
     }
 }

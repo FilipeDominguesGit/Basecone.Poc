@@ -11,13 +11,14 @@
 - Automatic mapping between layers [ Automapper]
 - Swagger support [ Swashbuckle ]
 - Logging [ Serilog ]
+- Db Migrations support [ Basecone.Poc.Migrations or command line ]
+- MySql Support
 
 ## TODO
 - Implement example worker
 - Improve docker support
 - Add examples with dapper and/or dbcontext instead of using the repository
 - Add request validations with fluent validator
-- Add migration runner
 - Add support to integration events
 - Add Healthcheks
 - Add Jwt Auth

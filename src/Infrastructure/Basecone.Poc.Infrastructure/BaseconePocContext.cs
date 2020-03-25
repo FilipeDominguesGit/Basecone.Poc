@@ -18,6 +18,7 @@ namespace Basecone.Poc.Infrastructure
         {
             _domainEventsPublisher = domainEventsPublisher;
         }
+
         public BaseconePocContext(DbContextOptions options) : base(options)
         {
         }
@@ -44,7 +45,7 @@ namespace Basecone.Poc.Infrastructure
 
             foreach (var domainEvent in domainEvents)
             {
-                await _domainEventsPublisher.Publish(domainEvent);
+                await _domainEventsPublisher?.Publish(domainEvent);
             }
         }
 

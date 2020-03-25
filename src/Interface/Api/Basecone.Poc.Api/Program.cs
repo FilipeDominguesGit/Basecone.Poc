@@ -18,10 +18,10 @@ namespace Basecone.Poc.Api
                 {
                     webBuilder.UseStartup<Startup>();
                 }).UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                    .MinimumLevel.Debug()
-                    .MinimumLevel.Override(DbLoggerCategory.Database.Command.Name, Serilog.Events.LogEventLevel.Debug)
+                    .MinimumLevel.Information()
+                    .MinimumLevel.Override(DbLoggerCategory.Database.Command.Name, Serilog.Events.LogEventLevel.Information)
                     .Enrich.FromLogContext()
-                    .WriteTo.Debug()
-                    .WriteTo.Console());
+                    .WriteTo.Console()
+                );
     }
 }
