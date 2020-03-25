@@ -75,9 +75,9 @@ namespace Basecone.Poc.Api.Controllers
         public async Task<ActionResult<Office>> Get(Guid officeId)
         {
 
-            var command = new GetOfficeByUniqueIdQuery(officeId);
+            var query = new GetOfficeByUniqueIdQuery(officeId);
 
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(query);
 
             var office = _mapper.Map<Office>(response);
 
@@ -103,9 +103,9 @@ namespace Basecone.Poc.Api.Controllers
         public async Task<ActionResult<List<Company>>> GetCompanies(Guid officeId)
         {
 
-            var command = new GetAllOfficeCompaniesQuery(officeId);
+            var query = new GetAllOfficeCompaniesQuery(officeId);
 
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(query);
 
             var companies = _mapper.Map<List<Company>>(response);
 
@@ -115,9 +115,9 @@ namespace Basecone.Poc.Api.Controllers
         [HttpGet("{officeId}/company/{companyId}")]
         public async Task<ActionResult<CompanyDto>> GetOfficeCompany(Guid officeId, Guid companyId)
         {
-            var command = new GetOfficeCompanyQuery(officeId, companyId);
+            var query = new GetOfficeCompanyQuery(officeId, companyId);
 
-            var response = await _mediator.Send(command);
+            var response = await _mediator.Send(query);
 
             var company = _mapper.Map<Company>(response);
 
