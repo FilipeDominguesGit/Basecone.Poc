@@ -19,7 +19,7 @@
 - Improve docker support
 - Add examples with dapper and/or dbcontext instead of using the repository
 - Add request validations with fluent validator
-- Add support to integration events
+- Add Integration event support
 - Add Healthcheks
 - Add Jwt Auth
 - Add Exception handler

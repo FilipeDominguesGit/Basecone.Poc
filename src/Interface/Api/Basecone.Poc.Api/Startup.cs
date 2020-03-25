@@ -16,6 +16,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Basecone.Poc.Api
 {
@@ -58,7 +61,21 @@ namespace Basecone.Poc.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basecone API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Basecone API",
+                    Version = "v1",
+                    Contact = new OpenApiContact() { 
+                    Email = "support@basecone.com",
+                    Name ="Basecone Support",
+                    Url = new Uri("https://support.basecone.com/"),
+                    },
+                    Description = "Basecone Poc Example template",
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddAutoMapper(typeof(ApiProfile), typeof(ApplicationProfile));

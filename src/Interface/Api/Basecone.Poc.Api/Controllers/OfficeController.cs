@@ -5,6 +5,7 @@ using Basecone.Poc.Application.Commands;
 using Basecone.Poc.Application.Models;
 using Basecone.Poc.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Basecone.Poc.Api.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class OfficeController : ControllerBase
@@ -25,7 +27,25 @@ namespace Basecone.Poc.Api.Controllers
             _mapper = mapper;
         }
 
+
+
+        /// <summary>
+        /// Creates an Office.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Office
+        ///     {
+        ///        "officeCode"  : "Code"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns>A newly created Office</returns>
+        /// <response code="201">Returns the newly created office</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Office>> CreateOffice([FromBody]CreateOfficeRequest request)
         {
 
@@ -65,6 +85,8 @@ namespace Basecone.Poc.Api.Controllers
         }
 
         [HttpPost("{officeId}/company")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<Company>> AddCompany([FromBody] AddCompanyToOfficeRequest request, Guid officeId)
         {
 
