@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Events;
 
 namespace Basecone.Poc.Api
 {
@@ -24,7 +18,8 @@ namespace Basecone.Poc.Api
                 {
                     webBuilder.UseStartup<Startup>();
                 }).UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                    .MinimumLevel.Information()
+                    .MinimumLevel.Debug()
+                    .MinimumLevel.Override(DbLoggerCategory.Database.Command.Name, Serilog.Events.LogEventLevel.Debug)
                     .Enrich.FromLogContext()
                     .WriteTo.Debug()
                     .WriteTo.Console());

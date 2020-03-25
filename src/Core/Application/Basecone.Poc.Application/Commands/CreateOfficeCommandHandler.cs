@@ -3,7 +3,6 @@ using Basecone.Poc.Application.Models;
 using Basecone.Poc.Domain.OfficeAggregate;
 using Basecone.Poc.Seedwork;
 using MediatR;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

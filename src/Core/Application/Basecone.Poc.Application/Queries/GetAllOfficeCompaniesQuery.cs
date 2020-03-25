@@ -1,5 +1,4 @@
 ﻿using Basecone.Poc.Application.Models;
-using Basecone.Poc.Domain.OfficeAggregate;
 using MediatR;
 using System;
 using System.Collections.Generic;

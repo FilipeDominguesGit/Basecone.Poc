@@ -1,8 +1,6 @@
 ﻿using Basecone.Poc.Domain.Events;
 using Basecone.Poc.Seedwork;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Basecone.Poc.Domain.OfficeAggregate
 {

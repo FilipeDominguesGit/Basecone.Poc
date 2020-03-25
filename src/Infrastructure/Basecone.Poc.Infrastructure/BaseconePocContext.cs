@@ -3,10 +3,7 @@ using Basecone.Poc.Infrastructure.Mapper;
 using Basecone.Poc.Seedwork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Basecone.Poc.Infrastructure
@@ -15,11 +12,14 @@ namespace Basecone.Poc.Infrastructure
     {
         private readonly IMediator _domainEventsPublisher;
 
-        public DbSet<Office> Offices { get; }
+        public DbSet<Office> Offices { get; set; }
 
         public BaseconePocContext(DbContextOptions options, IMediator domainEventsPublisher) : base(options)
         {
             _domainEventsPublisher = domainEventsPublisher;
+        }
+        public BaseconePocContext(DbContextOptions options) : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,8 +43,9 @@ namespace Basecone.Poc.Infrastructure
             await SaveChangesAsync();
 
             foreach (var domainEvent in domainEvents)
+            {
                 await _domainEventsPublisher.Publish(domainEvent);
-
+            }
         }
 
         public void RollBack()

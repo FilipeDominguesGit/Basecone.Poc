@@ -19,7 +19,7 @@ namespace Basecone.Poc.Domain.OfficeAggregate
 
                 if (value.Any(x => !char.IsLetterOrDigit(x)) && value.Length >= 100)
                 {
-                    throw new Exception("Office code can only contain letters or digits");
+                    throw new DomainException("Office code can only contain letters or digits");
                 }
 
                 _officeCode = value;

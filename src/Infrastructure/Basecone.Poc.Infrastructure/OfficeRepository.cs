@@ -42,24 +42,27 @@ namespace Basecone.Poc.Infrastructure
 
         public async Task<Company> GetOfficeCompanyByIdAsync(Guid officeUniqueId, Guid companyUniqueId)
         {
-            var office = await _context.Offices
+            var company = await _context.Offices
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == officeUniqueId)
+                .SelectMany(c => c.Companies)
+                .Where(c=>c.UniqueId==companyUniqueId)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
 
-            return office.Companies.Where(c => c.UniqueId == companyUniqueId).FirstOrDefault();
+            return company;
         }
 
         public async Task<List<Company>> GetAllOfficeCompaniesAsync(Guid officeUniqueId)
         {
-            var office = await _context.Offices
+            var companies = await _context.Offices
                 .Include(o => o.Companies)
                 .Where(o => o.UniqueId == officeUniqueId)
-                .FirstOrDefaultAsync()
+                .SelectMany(o=>o.Companies)
+                .ToListAsync()
                 .ConfigureAwait(false);
 
-            return office?.Companies.ToList();
+            return companies;
         }
     }
 }
