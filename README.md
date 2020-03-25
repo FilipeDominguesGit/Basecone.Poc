@@ -3,7 +3,7 @@
 ## Features
 
 - DDD with clean architecture
-- Repository and Unit of work patter using entity framework [ EfCore with in memory DB ]
+- Repository and Unit of work patter using entity framework [ EfCore with in memory DB/MySql ]
 - CQS using mediator pattern [ EfCore + Mediatr ]
 	- Queries: Return a result and do not change the observable state of the system (are free of side effects).
 	- Commands: Change the state of a system but do not return a value. [There some exeptions to the return value rule.]
