@@ -5,6 +5,7 @@ using Basecone.Poc.Application.Commands;
 using Basecone.Poc.Application.Models;
 using Basecone.Poc.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ namespace Basecone.Poc.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class OfficeController : ControllerBase
     {
